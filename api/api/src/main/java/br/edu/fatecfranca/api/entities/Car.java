@@ -3,6 +3,7 @@ package br.edu.fatecfranca.api.entities;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,13 +20,28 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String brand;
+
+    @Column(nullable = false)
     private String model;
+
+    @Column(nullable = false)
     private String color;
+
+    @Column(name = "year_manufacture", nullable = false)
     private Integer yearManufacture;
+
+    @Column(nullable = false)
     private Boolean imported;
+
+    @Column(nullable = false, unique = true)
     private String plates;
+
+    @Column(name = "selling_date")
     private LocalDate sellingDate;
+
+    @Column(name = "selling_price", precision = 12, scale = 2)
     private BigDecimal sellingPrice;
 
     @ManyToOne

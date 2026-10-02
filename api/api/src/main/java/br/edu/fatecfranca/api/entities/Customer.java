@@ -1,11 +1,17 @@
 package br.edu.fatecfranca.api.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,17 +22,42 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(name = "ident_document", nullable = false, unique = true)
     private String identDocument;
+
+    @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @Column(name = "street_name", nullable = false)
     private String streetName;
+
+    @Column(name = "house_number", nullable = false)
     private String houseNumber;
+
+    @Column(nullable = true)
     private String complements;
+
+    @Column(nullable = false)
     private String district;
+
+    @Column(nullable = false)
     private String municipality;
+
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(nullable = false, length = 2, columnDefinition = "CHAR(2)")
     private String state;
+
+    @Column(nullable = false)
     private String phone;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Car> cars;
 
     public Customer() {
     }
@@ -125,5 +156,13 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 }
